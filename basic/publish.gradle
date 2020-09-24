@@ -1,0 +1,30 @@
+apply plugin: 'com.novoda.build-properties'
+apply plugin: 'com.novoda.bintray-release'
+
+buildProperties {
+    publish {
+        using project.file('bintray.properties')
+    }
+}
+
+publish {
+    groupId = "com.${project.buildProperties.publish['bintrayUser'].string}"
+    artifactId = rootProject.name
+    desc = 'Super duper easy way to release your Android and other artifacts to bintray'
+    website = "https://github.com/${project.buildProperties.publish['bintrayUser'].string}/${rootProject.name}"
+    version = project.buildProperties.publish['version'].string
+    publishVersion = project.buildProperties.publish['version'].string
+    bintrayUser = project.buildProperties.publish['bintrayUser'].string
+    bintrayKey = project.buildProperties.publish['bintrayKey'].string
+    repoName = project.buildProperties.publish['bintrayRepo'].string
+    userOrg = project.buildProperties.publish['bintrayUser'].string
+    dryRun = false
+    override = true
+}
+tasks.withType(Javadoc) {
+    enabled = false
+    options.addStringOption('Xdoclint:none', '-quiet')
+    options.addStringOption('encoding', 'UTF-8')
+    options.addStringOption('charSet', 'UTF-8')
+}
+
