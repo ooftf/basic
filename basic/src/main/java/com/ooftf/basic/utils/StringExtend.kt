@@ -2,6 +2,7 @@ package com.ooftf.basic.utils
 
 import org.json.JSONException
 import org.json.JSONObject
+import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.*
 
@@ -59,8 +60,10 @@ fun String?.toDoubleOrDefaultSafe(defaultValue: Double = 0.0): Double {
 }
 
 
-fun String?.numFormat(pattern: String): String {
-    return DecimalFormat(pattern).format(toDoubleOrDefault())
+fun String?.numFormat(pattern: String, mode: RoundingMode = RoundingMode.HALF_EVEN): String {
+    return DecimalFormat(pattern).apply {
+        roundingMode = mode
+    }.format(toDoubleOrDefault())
 }
 
 fun String?.numFormat2(): String {
