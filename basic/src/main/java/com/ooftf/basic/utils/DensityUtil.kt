@@ -49,4 +49,9 @@ object DensityUtil {
         val fontScale = Resources.getSystem().displayMetrics.scaledDensity
         return (spValue * fontScale + 0.5f).toInt()
     }
+
+    fun px2sp(pxValue: Float): Float {
+        val fontScale = Resources.getSystem().displayMetrics.scaledDensity
+        return pxValue / fontScale
+    }
 }
