@@ -4,11 +4,9 @@
 要求：只收录使用率在90%以上的lib和class  
 目标：可以作为所有库的基础库的
 ## 引入方式
-、、、
-repositories {
-    maven {
-        url  "https://dl.bintray.com/ooftf/maven"
+    repositories {
+        maven {
+            url  "https://dl.bintray.com/ooftf/maven"
+        }
     }
-}
-implementation 'com.ooftf:basic:0.0.1'
-、、、
+    implementation 'com.ooftf:basic:0.0.1'
