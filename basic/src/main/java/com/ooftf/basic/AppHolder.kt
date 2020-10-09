@@ -1,6 +1,5 @@
 package com.ooftf.basic
 
-import android.app.Application
 import android.content.Context
 
 /**
@@ -10,5 +9,6 @@ import android.content.Context
  * @date 2020/9/23
  */
 object AppHolder {
-    var app: Context? = null
+    lateinit var app: Context
+        internal set
 }

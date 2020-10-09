@@ -14,7 +14,7 @@ import com.ooftf.basic.AppHolder
 var toastGravity: Int = Gravity.BOTTOM
 fun toast(
     message: CharSequence,
-    context: Context? = AppHolder.app,
+    context: Context = AppHolder.app,
     duration: Int = Toast.LENGTH_SHORT
 ) {
     val toast = Toast.makeText(context, message, duration)

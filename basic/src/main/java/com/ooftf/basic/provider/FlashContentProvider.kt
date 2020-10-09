@@ -17,7 +17,7 @@ import com.ooftf.basic.utils.toastGravity
  */
 class FlashContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        AppHolder.app = context
+        AppHolder.app = context!!
         return false
     }
 

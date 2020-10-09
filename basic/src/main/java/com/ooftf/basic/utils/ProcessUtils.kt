@@ -45,7 +45,7 @@ object ProcessUtils {
     }
 
     fun isMainProcess(): Boolean {
-        val packageName = app?.packageName
+        val packageName = app.packageName
         val processName = getCurrentProcessName()
         if (packageName == null) {
             return true
