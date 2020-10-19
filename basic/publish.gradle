@@ -6,7 +6,7 @@ buildProperties {
         using rootProject.file('local.properties')
     }
 }
-def theVersion = '0.0.4'
+def theVersion = '0.0.4-beta'
 def theUser = 'ooftf'
 publish {
     groupId = "com.${theUser}"
