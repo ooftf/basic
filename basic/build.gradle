@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply from: 'publish.gradle'
+apply plugin: 'ooftf-publish'
 android {
     compileSdkVersion 29
 
@@ -25,7 +25,9 @@ android {
         dataBinding true
     }
 }
-
+publish {
+    publishVersion = '0.0.5'
+}
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     testImplementation 'junit:junit:4.12'

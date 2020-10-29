@@ -1,14 +1,12 @@
 package com.ooftf.basic.provider
 
+import android.app.Application
 import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
-import android.util.Log
-import android.view.Gravity
 import com.ooftf.basic.AppHolder
-import com.ooftf.basic.utils.toastGravity
-
+import com.ooftf.basic.engine.ActivityManager
 /**
  *
  * @author ooftf
@@ -17,7 +15,8 @@ import com.ooftf.basic.utils.toastGravity
  */
 class FlashContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        AppHolder.app = context!!
+        AppHolder.app = (context as Application?)!!
+        ActivityManager.init(AppHolder.app)
         return false
     }
 
