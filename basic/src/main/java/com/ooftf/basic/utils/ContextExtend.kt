@@ -1,13 +1,16 @@
 package com.ooftf.basic.utils
 
 import android.app.Activity
-import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
-import android.content.pm.ApplicationInfo
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
+import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 
 /**
  *
@@ -28,6 +31,18 @@ fun Context.getActivity(): Activity? {
         context = context.baseContext
     }
     return null
+}
+
+fun Context.getColor(@ColorRes id: Int): Int {
+    return ContextCompat.getColor(this, id)
+}
+
+fun Context.getDrawable(@DrawableRes id: Int): Drawable? {
+    return ContextCompat.getDrawable(this, id)
+}
+
+fun Context.getDimension(@DimenRes id: Int): Float {
+    return resources.getDimension(id)
 }
 
 fun Context.inflate(layoutId: Int, parent: ViewGroup? = null, isAttach: Boolean = false): View {

@@ -3,17 +3,11 @@ import androidx.databinding.ObservableArrayList
 
 class ObservableArrayListPro<T> : ObservableArrayList<T>() {
     fun notifyChange(item: T) {
-        val index = indexOf(item)
-        if (remove(item)) {
-            add(index, item)
-        }
+        notifyChange(indexOf(item))
     }
 
     fun notifyChange(index: Int) {
-        val item = get(index)
-        if (remove(item)) {
-            add(index, item)
-        }
+        set(index, get(index))
     }
 
     fun notifyChange() {
