@@ -27,7 +27,7 @@ android {
     }
 }
 publish {
-    publishVersion = '0.0.7'
+    publishVersion = '0.0.7-beta2'
 }
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
