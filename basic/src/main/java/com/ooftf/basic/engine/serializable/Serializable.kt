@@ -10,8 +10,8 @@ import com.ooftf.basic.AppHolder
  * @date 2020/7/1
  */
 abstract class Serializable<T> {
-    val SP_NAME = "SERIALIZABLE_SWITCH_KEY_NAME_${this::class.java.name}"
-    val sp by lazy {
+    private val SP_NAME = "SERIALIZABLE_SWITCH_KEY_NAME_${this::class.java.name}"
+    protected val sp by lazy {
         AppHolder.app.getSharedPreferences(
             SP_NAME,
             Context.MODE_PRIVATE
@@ -25,7 +25,7 @@ abstract class Serializable<T> {
         return value ?: getDefaultValue()
     }
 
-    abstract fun getSerializable(): T
+    protected abstract fun getSerializable(): T
 
     fun set(value: T) {
         if (this.value == value) {
@@ -35,8 +35,17 @@ abstract class Serializable<T> {
         setSerializable(value)
     }
 
-    abstract fun setSerializable(value: T)
+    protected abstract fun setSerializable(value: T)
 
     abstract fun getKey(): String
     abstract fun getDefaultValue(): T
+
+    fun clear() {
+        value = null
+        clearSerializable()
+    }
+
+    fun clearSerializable() {
+        sp.edit().remove(getKey()).apply()
+    }
 }
