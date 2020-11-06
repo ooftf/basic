@@ -118,19 +118,18 @@ fun zeroPaddingToDouble(src: Int): String {
     return zeroPaddingToDouble(src.toString())
 }
 
-fun listToString(
-    list: List<*>?,
+fun List<*>?.listToString(
     splitCharacter: String
 ): String {
-    if (list == null) {
+    if (this == null) {
         return ""
     }
     var result = ""
-    for (i in list.indices) {
-        if (i == list.size - 1) {
-            result += list[i]
+    for (i in indices) {
+        if (i == size - 1) {
+            result += this[i]
         } else {
-            result += list[i]?.toString() ?: "" + splitCharacter
+            result += this[i]?.toString() ?: "" + splitCharacter
         }
     }
     return result

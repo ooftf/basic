@@ -33,15 +33,15 @@ fun Context.getActivity(): Activity? {
     return null
 }
 
-fun Context.getColor(@ColorRes id: Int): Int {
+fun Context.getColorCompat(@ColorRes id: Int): Int {
     return ContextCompat.getColor(this, id)
 }
 
-fun Context.getDrawable(@DrawableRes id: Int): Drawable? {
+fun Context.getDrawableCompat(@DrawableRes id: Int): Drawable? {
     return ContextCompat.getDrawable(this, id)
 }
 
-fun Context.getDimension(@DimenRes id: Int): Float {
+fun Context.getDimensionCompat(@DimenRes id: Int): Float {
     return resources.getDimension(id)
 }
 
