@@ -5,8 +5,8 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.net.Uri
-import com.ooftf.basic.AppHolder
 import com.ooftf.basic.engine.ActivityManager
+
 /**
  *
  * @author ooftf
@@ -15,8 +15,10 @@ import com.ooftf.basic.engine.ActivityManager
  */
 class FlashContentProvider : ContentProvider() {
     override fun onCreate(): Boolean {
-        AppHolder.app = (context as Application?)!!
-        ActivityManager.init(AppHolder.app)
+        (context as? Application)?.let {
+            sApplication = it
+            ActivityManager.init(it)
+        }
         return false
     }
 
@@ -49,5 +51,9 @@ class FlashContentProvider : ContentProvider() {
         selectionArgs: Array<out String>?
     ): Int {
         return 0
+    }
+
+    companion object {
+        var sApplication: Application? = null
     }
 }

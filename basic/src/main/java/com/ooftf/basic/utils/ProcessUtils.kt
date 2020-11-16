@@ -1,8 +1,8 @@
 package com.ooftf.basic.utils
 
+import android.content.Context
 import android.os.Process
 import android.text.TextUtils
-import com.ooftf.basic.AppHolder.app
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
@@ -44,8 +44,8 @@ object ProcessUtils {
         return getProcessName(Process.myPid())
     }
 
-    fun isMainProcess(): Boolean {
-        val packageName = app.packageName
+    fun isMainProcess(context: Context): Boolean {
+        val packageName = context.packageName
         val processName = getCurrentProcessName()
         if (packageName == null) {
             return true

@@ -53,3 +53,8 @@ fun Context.inflate(layoutId: Int, parent: ViewGroup? = null, isAttach: Boolean 
 fun Context.getCurrentFragment(): Fragment? {
     return getActivity()?.getCurrentFragment()
 }
+fun Context.runMainProcess(run: () -> Unit) {
+    if (ProcessUtils.isMainProcess(this)) {
+        run.invoke()
+    }
+}
