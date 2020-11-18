@@ -3,9 +3,6 @@ package com.ooftf.basic.armor
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ooftf.basic.utils.ThreadUtil
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 /**
  *
@@ -44,5 +41,11 @@ class LiveDataObserver<T> : MutableLiveData<T>() {
 fun <S, T> LiveData<S>.map(adapter: (S) -> T): LiveDataObserver<T> {
     return LiveDataObserver<T>().also { it ->
         it.observeLiveData(this, adapter)
+    }
+}
+
+fun <S, T> MutableLiveData<S>.map(adapter: (S) -> T, adapter2: (T) -> S): LiveDataObserver<T> {
+    return LiveDataObserver<T>().also { it ->
+        it.observeEachOther(this, adapter, adapter2)
     }
 }
