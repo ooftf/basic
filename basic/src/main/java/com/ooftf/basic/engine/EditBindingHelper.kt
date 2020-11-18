@@ -1,7 +1,6 @@
 package com.ooftf.basic.engine
 
 import android.text.Spanned
-import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.InverseBindingListener
 import com.ooftf.basic.R
@@ -29,7 +28,7 @@ object EditBindingHelper {
         } else if (!haveContentsChanged(text, oldText)) {
             return  // No content changes, so don't set anything.
         }
-        view.setText(text)
+        view.text = text
     }
 
     private fun haveContentsChanged(
@@ -56,10 +55,10 @@ object EditBindingHelper {
     fun getValue(view: TextView): String = view.text.toString()
 
     fun setOnValueChangedListener(
-        view: EditText,
+        view: TextView,
         bindingListener: InverseBindingListener?
     ) {
-        var oldWatcher = view.getTag(R.id.basic_tag_TextChangedListener) as TheTextWatcher?
+        var oldWatcher = view.getTag(R.id.basic_tag_TextChangedListener) as? TheTextWatcher
         if (bindingListener != null) {
             if (oldWatcher != null) {
                 oldWatcher.bindingListener = bindingListener
