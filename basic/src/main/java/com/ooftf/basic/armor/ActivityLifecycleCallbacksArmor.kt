@@ -10,33 +10,33 @@ import android.os.Bundle
  * @email 994749769@qq.com
  * @date 2020/9/24
  */
-open class ActivityLifecycleCallbacksArmor(var onActivityPreCreated: ((Activity, Bundle?) -> Unit)?,
-                                           var onActivityCreated: ((Activity, Bundle?) -> Unit)?,
-                                           var onActivityPostCreated: ((Activity, Bundle?) -> Unit)?,
+open class ActivityLifecycleCallbacksArmor(var onActivityPreCreated: ((Activity, Bundle?) -> Unit)? = null,
+                                           var onActivityCreated: ((Activity, Bundle?) -> Unit)? = null,
+                                           var onActivityPostCreated: ((Activity, Bundle?) -> Unit)? = null,
 
-                                           var onActivityPreStarted: ((Activity) -> Unit)?,
-                                           var onActivityStarted: ((Activity) -> Unit)?,
-                                           var onActivityPostStarted: ((Activity) -> Unit)?,
+                                           var onActivityPreStarted: ((Activity) -> Unit)? = null,
+                                           var onActivityStarted: ((Activity) -> Unit)? = null,
+                                           var onActivityPostStarted: ((Activity) -> Unit)? = null,
 
-                                           var onActivityPreResumed: ((Activity) -> Unit)?,
-                                           var onActivityResumed: ((Activity) -> Unit)?,
-                                           var onActivityPostResumed: ((Activity) -> Unit)?,
+                                           var onActivityPreResumed: ((Activity) -> Unit)? = null,
+                                           var onActivityResumed: ((Activity) -> Unit)? = null,
+                                           var onActivityPostResumed: ((Activity) -> Unit)? = null,
 
-                                           var onActivityPrePaused: ((Activity) -> Unit)?,
-                                           var onActivityPaused: ((Activity) -> Unit)?,
-                                           var onActivityPostPaused: ((Activity) -> Unit)?,
+                                           var onActivityPrePaused: ((Activity) -> Unit)? = null,
+                                           var onActivityPaused: ((Activity) -> Unit)? = null,
+                                           var onActivityPostPaused: ((Activity) -> Unit)? = null,
 
-                                           var onActivityPreStopped: ((Activity) -> Unit)?,
-                                           var onActivityStopped: ((Activity) -> Unit)?,
-                                           var onActivityPostStopped: ((Activity) -> Unit)?,
+                                           var onActivityPreStopped: ((Activity) -> Unit)? = null,
+                                           var onActivityStopped: ((Activity) -> Unit)? = null,
+                                           var onActivityPostStopped: ((Activity) -> Unit)? = null,
 
-                                           var onActivityPreSaveInstanceState: ((Activity, Bundle) -> Unit)?,
-                                           var onActivitySaveInstanceState: ((Activity, Bundle) -> Unit)?,
-                                           var onActivityPostSaveInstanceState: ((Activity, Bundle) -> Unit)?,
+                                           var onActivityPreSaveInstanceState: ((Activity, Bundle) -> Unit)? = null,
+                                           var onActivitySaveInstanceState: ((Activity, Bundle) -> Unit)? = null,
+                                           var onActivityPostSaveInstanceState: ((Activity, Bundle) -> Unit)? = null,
 
-                                           var onActivityPreDestroyed: ((Activity) -> Unit)?,
-                                           var onActivityDestroyed: ((Activity) -> Unit)?,
-                                           var onActivityPostDestroyed: ((Activity) -> Unit)?,
+                                           var onActivityPreDestroyed: ((Activity) -> Unit)? = null,
+                                           var onActivityDestroyed: ((Activity) -> Unit)? = null,
+                                           var onActivityPostDestroyed: ((Activity) -> Unit)? = null,
                                            ) :
     Application.ActivityLifecycleCallbacks {
     override fun onActivityPreCreated(activity: Activity, savedInstanceState: Bundle?) {
