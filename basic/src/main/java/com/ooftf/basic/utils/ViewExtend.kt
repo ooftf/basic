@@ -1,5 +1,6 @@
 package com.ooftf.basic.utils
 
+import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DimenRes
@@ -79,5 +80,30 @@ fun View.setPaddingHorizontalRes(@DimenRes paddingRes: Int) {
     setPadding(paddingPx, paddingTop, paddingPx, paddingBottom)
 }
 
+/**
+ * 可见部分在整个屏幕中所处的位置
+ * 包含titleBar所占位置
+ */
+fun View.getVisibleRectOfScreen(): Rect {
+    return Rect().apply {
+        getGlobalVisibleRect(this)
+    }
+}
 
-
+/**
+ * （自身可见部分）处于（自身）的位置
+ */
+fun View.getVisibleRectOfSelf(): Rect {
+    return Rect().apply {
+        getLocalVisibleRect(this)
+    }
+}
+fun View.postLayoutComplete(action: () -> Unit) {
+    if (height != 0 || width != 0) {
+        action.invoke()
+    } else {
+        post {
+            postLayoutComplete(action)
+        }
+    }
+}
