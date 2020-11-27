@@ -30,16 +30,26 @@ fun RecyclerView.scrollPositionToCenter(position: Int) {
         }
     } else {
         val findViewByPosition = layoutManager.findViewByPosition(position) ?: return
-        val dy = findViewByPosition.getVisibleRectOfScreen()
-            .centerY() - getVisibleRectOfScreen().centerY()
-        smoothScrollBy(
-            0,
-            dy
-        )
+        if (layoutManager.orientation == RecyclerView.VERTICAL) {
+            val dy = findViewByPosition.getVisibleRectOfScreen()
+                .centerY() - getVisibleRectOfScreen().centerY()
+            smoothScrollBy(
+                0,
+                dy
+            )
+        } else {
+            val dx = findViewByPosition.getVisibleRectOfScreen()
+                .centerX() - getVisibleRectOfScreen().centerX()
+            smoothScrollBy(
+                dx,
+                0
+            )
+        }
+
     }
 }
 
-fun RecyclerView.scrollPositionToTop(position: Int) {
+fun RecyclerView.scrollPositionToFirst(position: Int) {
     val itemCount = adapter?.itemCount
     if (itemCount == null || position < 0 || position >= itemCount) {
         return
@@ -51,20 +61,30 @@ fun RecyclerView.scrollPositionToTop(position: Int) {
         if (scrollState == RecyclerView.SCROLL_STATE_IDLE) {
             smoothScrollToPosition(position)
             post {
-                scrollPositionToTop(position)
+                scrollPositionToFirst(position)
             }
         } else {
             post {
-                scrollPositionToTop(position)
+                scrollPositionToFirst(position)
             }
         }
     } else {
         val findViewByPosition = layoutManager.findViewByPosition(position) ?: return
-        val dy =
-            findViewByPosition.getVisibleRectOfScreen().top - getVisibleRectOfScreen().top
-        smoothScrollBy(
-            0,
-            dy
-        )
+        if (layoutManager.orientation == RecyclerView.VERTICAL) {
+            val dy =
+                findViewByPosition.getVisibleRectOfScreen().top - getVisibleRectOfScreen().top
+            smoothScrollBy(
+                0,
+                dy
+            )
+        } else {
+            val dx =
+                findViewByPosition.getVisibleRectOfScreen().left - getVisibleRectOfScreen().left
+            smoothScrollBy(
+                dx,
+                0
+            )
+        }
+
     }
 }
