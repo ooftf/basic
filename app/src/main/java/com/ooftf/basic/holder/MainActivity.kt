@@ -3,27 +3,25 @@ package com.ooftf.basic.holder
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.ooftf.basic.utils.*
+import com.ooftf.basic.engine.serializable.SerializableObject
+import com.ooftf.basic.utils.getVisibleRectOfScreen
+import com.ooftf.basic.utils.getVisibleRectOfSelf
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toast("SUCCESS")
-        button.setOnClickListener {
-            toastSuccess("删除成功")
-            toastWarn("删除成功")
-            toastError("删除成功")
-        }
+
         val ar = arrayListOf("0", "1", "2", "2", "3")
-        ar.removeIf_ { it == "2" }
-        button.postLayoutComplete {
-            log()
+        val ss = object : SerializableObject<ArrayList<String>>() {
+            override fun getDefaultValue(): ArrayList<String> {
+                return arrayListOf()
+            }
         }
-
-        button.postDelayed({ log() }, 2000)
-
+        //ss.set(ar)
+        Log.e("getKey", ss.getKey())
+        Log.e("SerializableObject", ss.get().toString())
     }
 
     private fun log() {

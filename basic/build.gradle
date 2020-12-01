@@ -50,7 +50,7 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7"
     api 'io.reactivex.rxjava3:rxjava:3.0.7'
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'
-
+    api 'com.google.code.gson:gson:2.8.6'
     def rxlifecycleVersion = '4.0.2'
     api "com.trello.rxlifecycle4:rxlifecycle:$rxlifecycleVersion"
 // If you want to bind to Android-specific lifecycles
