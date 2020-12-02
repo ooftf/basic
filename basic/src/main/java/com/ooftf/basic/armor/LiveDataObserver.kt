@@ -12,29 +12,34 @@ import com.ooftf.basic.utils.ThreadUtil
  */
 class LiveDataObserver<T> : MutableLiveData<T>() {
     fun <S> observeLiveData(source: LiveData<S>, adapter: (S) -> T) {
-        source.observeForever {
-            value = adapter.invoke(it)
+        ThreadUtil.runOnUiThread {
+            source.observeForever {
+                value = adapter.invoke(it)
+            }
         }
     }
 
     fun <S> observeEachOther(source: MutableLiveData<S>, adapter: (S) -> T, adapter2: (T) -> S) {
-        source.observeForever {
-            val invoke = adapter.invoke(it)
-            if (value != invoke) {
-                ThreadUtil.runOnUiThread {
-                    value = invoke
+        ThreadUtil.runOnUiThread {
+            source.observeForever {
+                val invoke = adapter.invoke(it)
+                if (value != invoke) {
+                    ThreadUtil.runOnUiThread {
+                        value = invoke
+                    }
+                }
+            }
+
+            this.observeForever {
+                val invoke = adapter2.invoke(it)
+                if (invoke != source.value) {
+                    ThreadUtil.runOnUiThread {
+                        source.value = invoke
+                    }
                 }
             }
         }
 
-        this.observeForever {
-            val invoke = adapter2.invoke(it)
-            if (invoke != source.value) {
-                ThreadUtil.runOnUiThread {
-                    source.value = invoke
-                }
-            }
-        }
     }
 }
 

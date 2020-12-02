@@ -11,7 +11,7 @@ import java.lang.ref.WeakReference
  *
  * 只适用于单进程Activity
  */
-public object ActivityManager {
+object ActivityManager {
     private val activities = ArrayList<WeakReference<Activity>>()
     private var touchCounter = 0
     private var showCounter = 0
@@ -22,7 +22,8 @@ public object ActivityManager {
             return
         }
         isInit = true
-        application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+        application.registerActivityLifecycleCallbacks(object :
+            Application.ActivityLifecycleCallbacks {
             override fun onActivityPaused(activity: Activity?) {
                 if (top?.get() == activity) {
                     top = null
@@ -135,20 +136,36 @@ public object ActivityManager {
 
     fun finishActivities(cla: Class<*>) {
         activities.filter { it.get()?.javaClass == cla }
-                .forEach { it.get()?.finish() }
+            .forEach { it.get()?.finish() }
     }
 
     fun finishActivities(cla: Class<*>, resultCode: Int, intent: Intent) {
         activities.filter { it.get()?.javaClass == cla }
-                .forEach {
-                    it.get()?.intent = intent
-                    it.get()?.setResult(resultCode)
-                    it.get()?.finish()
-                }
+            .forEach {
+                it.get()?.intent = intent
+                it.get()?.setResult(resultCode)
+                it.get()?.finish()
+            }
     }
 
     fun finishOther(activity: Activity) {
         activities.filter { it.get() != activity }
-                .forEach { it.get()?.finish() }
+            .forEach { it.get()?.finish() }
+    }
+
+    fun finishOther(clazz: Class<*>) {
+        activities.filter { it.get()?.javaClass != clazz }
+            .forEach { it.get()?.finish() }
+    }
+
+    fun finish(predicate: (Activity) -> Boolean) {
+        activities.filter {
+            val activity = it.get()
+            if (activity == null) {
+                false
+            } else {
+                predicate.invoke(activity)
+            }
+        }.forEach { it.get()?.finish() }
     }
 }
