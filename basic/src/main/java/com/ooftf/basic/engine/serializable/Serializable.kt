@@ -20,7 +20,11 @@ abstract class Serializable<T> {
     private var value: T? = null
     fun get(): T {
         if (value == null) {
-            value = getSerializable()
+            try {
+                value = getSerializable()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
         return value ?: getDefaultValue()
     }

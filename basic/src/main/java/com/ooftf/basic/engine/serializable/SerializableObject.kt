@@ -1,7 +1,10 @@
 package com.ooftf.basic.engine.serializable
 
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.ooftf.basic.utils.getGenericParamType
+import java.lang.reflect.ParameterizedType
 
 /**
  *
@@ -23,7 +26,8 @@ abstract class SerializableObject<T> : Serializable<T>() {
             getDefaultValue()
         } else {
             try {
-                gson.fromJson(json, object : TypeToken<T>() {}.type)
+                val genericParamType = this.getGenericParamType(0)
+                gson.fromJson(json, genericParamType)
             } catch (e: Exception) {
                 e.printStackTrace()
                 getDefaultValue()
