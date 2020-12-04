@@ -11,7 +11,8 @@ import com.google.gson.reflect.TypeToken
  * @date 2020/6/10
  */
 abstract class SerializableObject<T> : Serializable<T>() {
-    val gson = Gson()
+    val gson = createGson()
+    open fun createGson() = Gson()
     override fun getKey(): String {
         return javaClass.name
     }
