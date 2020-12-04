@@ -21,12 +21,22 @@ abstract class SerializableObject<T> : Serializable<T>() {
         return if (json == null) {
             getDefaultValue()
         } else {
-            gson.fromJson(json, object : TypeToken<T>() {}.type)
+            try {
+                gson.fromJson(json, object : TypeToken<T>() {}.type)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                getDefaultValue()
+            }
+
         }
 
     }
 
     override fun setSerializable(value: T) {
         sp.edit().putString(getKey(), gson.toJson(value)).apply()
+    }
+
+    open fun sync() {
+        setSerializable(get())
     }
 }
