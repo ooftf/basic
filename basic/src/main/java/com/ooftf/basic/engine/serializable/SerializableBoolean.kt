@@ -1,7 +1,6 @@
 package com.ooftf.basic.engine.serializable
 
-import android.view.View
-import android.widget.Checkable
+import android.widget.CompoundButton
 
 /**
  *
@@ -20,12 +19,11 @@ abstract class SerializableBoolean : Serializable<Boolean>() {
 
     override fun getDefaultValue() = false
 
-    fun bind(v: Checkable) {
+    fun bind(v: CompoundButton, listener: CompoundButton.OnCheckedChangeListener?) {
         v.isChecked = get()
-        (v as? View)?.let {
-            it.setOnClickListener {
-                set(v.isChecked)
-            }
+        v.setOnCheckedChangeListener { buttonView, isChecked ->
+            set(isChecked)
+            listener?.onCheckedChanged(buttonView, isChecked)
         }
     }
 }
