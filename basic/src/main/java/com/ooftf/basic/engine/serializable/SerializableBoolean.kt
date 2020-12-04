@@ -19,7 +19,7 @@ abstract class SerializableBoolean : Serializable<Boolean>() {
 
     override fun getDefaultValue() = false
 
-    fun bind(v: CompoundButton, listener: CompoundButton.OnCheckedChangeListener?) {
+    fun bind(v: CompoundButton, listener: CompoundButton.OnCheckedChangeListener? = null) {
         v.isChecked = get()
         v.setOnCheckedChangeListener { buttonView, isChecked ->
             set(isChecked)
