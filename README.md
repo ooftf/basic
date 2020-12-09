@@ -10,3 +10,8 @@
         }
     }
     implementation 'com.ooftf:basic:0.0.1'
+
+
+## 混淆
+    -keepnames class com.ooftf.basic.engine.serializable.Serializable
+    -keepnames class * extends com.ooftf.basic.engine.serializable.Serializable
