@@ -3,6 +3,7 @@ package com.ooftf.basic.utils
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
@@ -36,6 +37,10 @@ fun Context.getActivity(): Activity? {
 
 fun Context.getColorCompat(@ColorRes id: Int): Int {
     return ContextCompat.getColor(this, id)
+}
+
+fun Context.getColorStateList(@ColorRes id: Int): ColorStateList? {
+    return ContextCompat.getColorStateList(this, id)
 }
 
 fun Context.getDrawableCompat(@DrawableRes id: Int): Drawable? {
