@@ -46,6 +46,10 @@ fun Context.getDimensionCompat(@DimenRes id: Int): Float {
     return resources.getDimension(id)
 }
 
+fun Context.getDimensionPixelSize(@DimenRes id: Int): Int {
+    return resources.getDimensionPixelSize(id)
+}
+
 fun Context.inflate(layoutId: Int, parent: ViewGroup? = null, isAttach: Boolean = false): View {
     return LayoutInflater.from(this).inflate(layoutId, parent, isAttach)
 }
@@ -53,6 +57,7 @@ fun Context.inflate(layoutId: Int, parent: ViewGroup? = null, isAttach: Boolean 
 fun Context.getCurrentFragment(): Fragment? {
     return getActivity()?.getCurrentFragment()
 }
+
 fun Context.runMainProcess(run: () -> Unit) {
     if (ProcessUtils.isMainProcess(this)) {
         run.invoke()
