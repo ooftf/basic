@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="basic_ooftf_SwitchAccentTheme">
+        <!--thumb打开颜色-->
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+
+    <style name="basic_ooftf_SwitchPrimaryTheme">
+        <!--thumb打开颜色-->
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <!--thumb关闭颜色-->
+        <!--  <item name="colorSwitchThumbNormal">#FFF1F1F1</item>-->
+        <!--track关闭颜色-->
+        <!--   <item name="android:colorForeground">#FF2F2F2F</item>-->
+    </style>
+</resources>
