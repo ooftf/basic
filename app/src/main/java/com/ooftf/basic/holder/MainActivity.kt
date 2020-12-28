@@ -23,10 +23,6 @@ class MainActivity : AppCompatActivity() {
         //ss.set(ar)
         Log.e("getKey", ss.getKey())
         Log.e("SerializableObject", ss.get().toString())
-        (1..100000).forEach {
-            button.setTag(genTagId(), "")
-            Log.e("removeInvalid0", "" + genTagId())
-        }
 
     }
 
