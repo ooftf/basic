@@ -4,6 +4,7 @@ import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DimenRes
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.roundToInt
 
 /**
@@ -98,6 +99,7 @@ fun View.getVisibleRectOfSelf(): Rect {
         getLocalVisibleRect(this)
     }
 }
+
 fun View.postLayoutComplete(action: () -> Unit) {
     if (height != 0 || width != 0) {
         action.invoke()
@@ -106,4 +108,14 @@ fun View.postLayoutComplete(action: () -> Unit) {
             postLayoutComplete(action)
         }
     }
+    View.generateViewId()
+}
+
+private val idGen = AtomicInteger(0x02000000)
+fun genTagId(): Int {//0x02000000..0x7FFFFFFF
+    val andIncrement = idGen.getAndIncrement()
+    if (andIncrement == Int.MAX_VALUE) {
+        idGen.set(0x02000000)
+    }
+    return andIncrement
 }

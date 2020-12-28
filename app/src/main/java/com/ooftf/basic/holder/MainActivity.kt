@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.ooftf.basic.engine.serializable.SerializableObject
+import com.ooftf.basic.utils.genTagId
 import com.ooftf.basic.utils.getVisibleRectOfScreen
 import com.ooftf.basic.utils.getVisibleRectOfSelf
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,6 +23,11 @@ class MainActivity : AppCompatActivity() {
         //ss.set(ar)
         Log.e("getKey", ss.getKey())
         Log.e("SerializableObject", ss.get().toString())
+        (1..100000).forEach {
+            button.setTag(genTagId(), "")
+            Log.e("removeInvalid0", "" + genTagId())
+        }
+
     }
 
     private fun log() {

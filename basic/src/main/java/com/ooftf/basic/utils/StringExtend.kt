@@ -32,10 +32,36 @@ fun String?.toIntOrDefaultSafe(defaultValue: Int = 0): Int {
     if (isNullOrBlank()) {
         return defaultValue
     }
-    val newStr = replace(Regex("[^\\d]*"), "")
+    val newStr = toSafeIntString()
     return newStr.toIntOrNull() ?: defaultValue
 }
 
+fun String.toSafeIntString(): String {
+    return replace(Regex("[^\\d]*"), "")
+}
+
+fun String.removeInvalid0(): String {
+    var result = this.toSafeDoubleString()
+    result = result.removeStartInvalid0()
+    result = result.removeEndInvalid0()
+    return result
+}
+
+fun String.removeEndInvalid0(): String {
+    var result = this
+    while ((result.contains(".") && result.endsWith("0")) || result.endsWith(".")) {
+        result = result.substring(0, result.length - 1)
+    }
+    return result
+}
+
+fun String.removeStartInvalid0(): String {
+    var result = this
+    while (result.startsWith("0") && !result.startsWith("0.")) {
+        result = result.substring(1)
+    }
+    return result
+}
 
 fun String?.isDouble(): Boolean {
     if (isNullOrBlank()) {
@@ -55,10 +81,13 @@ fun String?.toDoubleOrDefaultSafe(defaultValue: Double = 0.0): Double {
     if (isNullOrBlank()) {
         return defaultValue
     }
-    val newStr = replace(Regex("[^\\d.]*"), "")
+    val newStr = toSafeDoubleString()
     return newStr.toDoubleOrNull() ?: defaultValue
 }
 
+fun String.toSafeDoubleString(): String {
+    return replace(Regex("[^\\d.]*"), "")
+}
 
 fun String?.numFormat(pattern: String, mode: RoundingMode = RoundingMode.HALF_EVEN): String {
     return DecimalFormat(pattern).apply {
