@@ -9,4 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
  * @email 994749769@qq.com
  * @date 2020/9/24
  */
-open class ItemBindingViewHolder(var binding: ViewDataBinding) : RecyclerView.ViewHolder(binding.root)
+open class ItemBindingViewHolder<T : ViewDataBinding>(var binding: T) :
+    RecyclerView.ViewHolder(binding.root) {
+}
