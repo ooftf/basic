@@ -31,7 +31,7 @@ android {
     }
 }
 publish {
-    publishVersion = '0.2.10'
+    publishVersion = '0.2.11'
     override = false
 }
 dependencies {

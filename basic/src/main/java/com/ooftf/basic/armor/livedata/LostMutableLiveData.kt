@@ -1,9 +1,9 @@
 package com.ooftf.basic.armor.livedata
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.ooftf.basic.utils.reflectGetVersion
 
 /**
  *
@@ -20,15 +20,6 @@ open class LostMutableLiveData<T> : MutableLiveData<T>() {
         super.observeForever(WrapperObserver(observer, this))
     }
 
-    private fun reflectGetVersion(): Int {
-        return try {
-            val method = LiveData::class.java.getDeclaredMethod("getVersion")
-            method.isAccessible = true
-            method.invoke(this) as Int
-        } catch (e: Exception) {
-            throw RuntimeException("LiveData has changed ,can't find method getVersion")
-        }
-    }
 
     internal class WrapperObserver<T>(var real: Observer<in T>, liveData: LostMutableLiveData<*>) :
         Observer<T> {
