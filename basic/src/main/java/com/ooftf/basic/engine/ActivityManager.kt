@@ -168,4 +168,8 @@ object ActivityManager {
             }
         }.forEach { it.get()?.finish() }
     }
+
+    fun getActivityWeakReference(): ArrayList<WeakReference<Activity>> {
+        return activities
+    }
 }

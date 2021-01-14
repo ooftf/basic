@@ -1,5 +1,6 @@
 package com.ooftf.basic.holder
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -33,5 +34,12 @@ class MainActivity : AppCompatActivity() {
         Log.e("result", "" + button.top)
         Log.e("result", "" + button.right)
         Log.e("result", "" + button.bottom)
+
+        supportFinishAfterTransition()
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
     }
 }
