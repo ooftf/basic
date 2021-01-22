@@ -1,9 +1,12 @@
 package com.ooftf.basic.utils
 
+import android.R
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DimenRes
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.math.roundToInt
 
@@ -108,7 +111,61 @@ fun View.postLayoutComplete(action: () -> Unit) {
             postLayoutComplete(action)
         }
     }
-    View.generateViewId()
+}
+
+fun View.findAttachedFragment(): Fragment? {
+    this.context.getFragmentActivity()?.let {
+        val map = HashMap<View, Fragment>()
+        findAllSupportFragmentsWithViews(it.supportFragmentManager.fragments, map)
+        var result: Fragment? = null
+        val activityRoot: View = it.findViewById<View>(R.id.content)
+        var current: View = this
+        while (current != activityRoot) {
+            result = map[current]
+            if (result != null) {
+                break
+            }
+            current = if (current.parent is View) {
+                current.parent as View
+            } else {
+                break
+            }
+        }
+        return result
+    }
+    return null
+}
+
+fun View.findAttachedLifecycleOwner(): LifecycleOwner? {
+    this.findAttachedFragment()?.let {
+        return it
+    }
+    this.context.getActivity()?.let {
+        if (it is LifecycleOwner) {
+            return it
+        }
+    }
+    return null
+}
+
+private fun findAllSupportFragmentsWithViews(
+    topLevelFragments: Collection<Fragment>?,
+    result: MutableMap<View, Fragment>
+) {
+    if (topLevelFragments == null) {
+        return
+    }
+    for (fragment in topLevelFragments) {
+        // getFragment()s in the support FragmentManager may contain null values, see #1991.
+        val key = fragment.view
+        if (key == null) {
+            continue
+        } else {
+            result[key] = fragment
+            findAllSupportFragmentsWithViews(fragment.childFragmentManager.fragments, result)
+        }
+
+    }
 }
 
 private val idGen = AtomicInteger(0x02000000)

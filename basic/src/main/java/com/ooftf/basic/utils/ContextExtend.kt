@@ -13,6 +13,7 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
 /**
  *
@@ -31,6 +32,15 @@ fun Context.getActivity(): Activity? {
             return context
         }
         context = context.baseContext
+    }
+    return null
+}
+
+fun Context.getFragmentActivity(): FragmentActivity? {
+    getActivity().let {
+        if (it is FragmentActivity) {
+            return it
+        }
     }
     return null
 }
