@@ -32,7 +32,7 @@ android {
 }
 publish {
     publishVersion = '0.2.12'
-    override = false
+    override = true
 }
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
