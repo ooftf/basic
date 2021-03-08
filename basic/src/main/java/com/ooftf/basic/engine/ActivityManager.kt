@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.os.IBinder
+import com.ooftf.basic.utils.reflectGetField
 import java.lang.ref.WeakReference
 
 /**
@@ -132,6 +134,12 @@ object ActivityManager {
     fun isAppForeground() = touchCounter > 0
     fun finishAll() {
         activities.forEach { it.get()?.finish() }
+    }
+
+    fun finish(token: IBinder) {
+        activities.firstOrNull {
+            it.get()?.reflectGetField("mToken", Activity::class.java) == token
+        }?.get()?.finish()
     }
 
     fun finishActivities(cla: Class<*>) {
