@@ -18,12 +18,24 @@ object CrashUtil {
                     mH.reflectSetField("mCallback", Handler.Callback { message ->
                         try {
                             message.target.handleMessage(message)
-                        } catch (e: Exception) {
+                        } catch (e: Throwable) {
                             e.printStackTrace()
-                            (message.obj.reflectMethod("getActivityToken") as? IBinder)?.let {
-                                toastError("发生异常，自动关闭当前页面！")
-                                ActivityManager.finish(it)
+                            when (message.what) {
+                                159 -> {//EXECUTE_TRANSACTION
+                                    (message.obj.reflectMethod("getActivityToken") as? IBinder)?.let {
+                                        toastError("发生异常，自动关闭当前页面！")
+                                        ActivityManager.finish(it)
+                                    }
+                                }
+
+                                134 -> {//SCHEDULE_CRASH::RemoteServiceException
+                                    //RemoteServiceException 直接忽略掉，不影响整体程序运行
+                                }
+                                else -> {
+                                    throw e
+                                }
                             }
+
                         }
                         true
                     }, Handler::class.java)
