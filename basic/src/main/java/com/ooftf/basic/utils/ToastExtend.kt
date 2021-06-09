@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.annotation.DrawableRes
 import com.ooftf.basic.AppHolder
 import com.ooftf.basic.R
+import java.lang.ref.WeakReference
 
 /**
  *
@@ -16,6 +17,7 @@ import com.ooftf.basic.R
  * @date 2020/9/23
  */
 var toastGravity: Int = Gravity.BOTTOM
+var toastWeakReference: WeakReference<Toast>? = null
 fun toast(
     message: CharSequence,
     context: Context = AppHolder.app,
@@ -26,7 +28,25 @@ fun toast(
     if (gravity != Gravity.BOTTOM) {
         toast.setGravity(gravity, 0, 0)
     }
+    toastWeakReference?.get()?.cancel()
     toast.show()
+    toastWeakReference = WeakReference<Toast>(toast)
+}
+
+fun toastCenter(
+    message: CharSequence,
+    context: Context = AppHolder.app,
+    duration: Int = Toast.LENGTH_SHORT
+) {
+    toast(message, context, duration, Gravity.CENTER)
+}
+
+fun toastBottom(
+    message: CharSequence,
+    context: Context = AppHolder.app,
+    duration: Int = Toast.LENGTH_SHORT
+) {
+    toast(message, context, duration, Gravity.BOTTOM)
 }
 
 fun toastSuccess(

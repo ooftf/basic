@@ -23,10 +23,6 @@ public class ParamViewModelFactory extends ViewModelProvider.NewInstanceFactory 
      */
     public ParamViewModelFactory(Object... param) {
         this.param = param;
-        paramClass = new Class[param.length];
-        for (int i = 0; i < param.length; i++) {
-            paramClass[i] = param[i].getClass();
-        }
     }
 
     /**
@@ -48,19 +44,14 @@ public class ParamViewModelFactory extends ViewModelProvider.NewInstanceFactory 
     }
 
     private <T extends ViewModel> Constructor<T> getConstructor(@NonNull Class<T> modelClass) throws NoSuchMethodException {
-        try {
-            return modelClass.getConstructor(paramClass);
-        } catch (NoSuchMethodException e) {
-            for (int i = 0; i < paramClass.length; i++) {
-                if (Application.class.isAssignableFrom(paramClass[i])) {
-                    paramClass[i] = Application.class;
-                }
-            }
+        if(paramClass == null){
             try {
                 return modelClass.getConstructor(paramClass);
-            } catch (NoSuchMethodException e2) {
+            } catch (NoSuchMethodException e) {
                 return (Constructor<T>) modelClass.getConstructors()[0];
             }
+        }else{
+            return (Constructor<T>) modelClass.getConstructors()[0];
         }
     }
 
