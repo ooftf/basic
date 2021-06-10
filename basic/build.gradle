@@ -29,7 +29,7 @@ android {
 
 publish {
     artifactId = 'basic'
-    version = '0.3.1'
+    version = '0.3.2'
 }
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
