@@ -18,6 +18,7 @@ import java.lang.ref.WeakReference
  */
 var toastGravity: Int = Gravity.BOTTOM
 var toastWeakReference: WeakReference<Toast>? = null
+var toastText: CharSequence? = null
 fun toast(
     message: CharSequence,
     context: Context = AppHolder.app,
@@ -28,8 +29,11 @@ fun toast(
     if (gravity != Gravity.BOTTOM) {
         toast.setGravity(gravity, 0, 0)
     }
-    toastWeakReference?.get()?.cancel()
+    if (message == toastText) {
+        toastWeakReference?.get()?.cancel()
+    }
     toast.show()
+    toastText = message
     toastWeakReference = WeakReference<Toast>(toast)
 }
 
