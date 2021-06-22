@@ -25,6 +25,9 @@ fun toast(
     duration: Int = Toast.LENGTH_SHORT,
     gravity: Int = toastGravity
 ) {
+    if (message.isBlank()) {
+        return
+    }
     val toast = Toast.makeText(context, message, duration)
     if (gravity != Gravity.BOTTOM) {
         toast.setGravity(gravity, 0, 0)
