@@ -1,6 +1,7 @@
 package com.ooftf.basic.utils
 
 import android.R
+import android.graphics.Point
 import android.graphics.Rect
 import android.view.View
 import android.view.ViewGroup
@@ -87,8 +88,20 @@ fun View.setPaddingHorizontalRes(@DimenRes paddingRes: Int) {
 /**
  * 可见部分在整个屏幕中所处的位置
  * 包含titleBar所占位置
+ *
+ * getGlobalVisibleRect 方法获取的是相对于 Window 的值，Rect是可视范围，Point 是左上角坐标（包含不可视部分）
  */
 fun View.getVisibleRectOfScreen(): Rect {
+    return Rect().apply {
+        val p = Point()
+        getGlobalVisibleRect(this, p)
+        val locations = IntArray(2)
+        getLocationOnScreen(locations)
+        offset(locations[0] - p.x, locations[1] - p.y)
+    }
+}
+
+fun View.getVisibleRectOfWindow(): Rect {
     return Rect().apply {
         getGlobalVisibleRect(this)
     }
