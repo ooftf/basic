@@ -29,7 +29,7 @@ android {
 
 publish {
     artifactId = 'basic'
-    version = '0.3.3'
+    version = '0.4.0'
 }
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
@@ -49,7 +49,10 @@ dependencies {
     api 'io.reactivex.rxjava3:rxjava:3.0.11'
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'
     api 'com.google.code.gson:gson:2.8.6'
+    api 'androidx.core:core:1.6.0-rc01'
     def rxlifecycleVersion = '4.0.2'
+    implementation 'com.blankj:utilcodex:1.30.6'
+    implementation "androidx.startup:startup-runtime:1.0.0"
     api "com.trello.rxlifecycle4:rxlifecycle:$rxlifecycleVersion"
 // If you want to bind to Android-specific lifecycles
     api "com.trello.rxlifecycle4:rxlifecycle-android:$rxlifecycleVersion"

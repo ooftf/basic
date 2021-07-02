@@ -24,6 +24,7 @@ object ActivityManager {
             return
         }
         isInit = true
+
         application.registerActivityLifecycleCallbacks(object :
             Application.ActivityLifecycleCallbacks {
             override fun onActivityPaused(activity: Activity?) {
