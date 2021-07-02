@@ -12,6 +12,7 @@ import com.ooftf.basic.engine.ActivityManager
  * @date 2021/7/2
  */
 class OoftfBasicInitializer : Initializer<ActivityManager> {
+
     override fun create(context: Context): ActivityManager {
         ActivityManager.init(context as Application)
         return ActivityManager

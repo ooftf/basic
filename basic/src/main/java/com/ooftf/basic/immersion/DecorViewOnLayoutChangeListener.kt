@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.core.graphics.and
 import com.blankj.utilcode.util.BarUtils
+import com.ooftf.basic.utils.getActivity
 import com.ooftf.basic.utils.getVisibleRectOfScreen
 
 class DecorViewOnLayoutChangeListener(val window: Window) : View.OnLayoutChangeListener {
@@ -26,7 +27,7 @@ class DecorViewOnLayoutChangeListener(val window: Window) : View.OnLayoutChangeL
 
         val outRect = Rect()
         window.decorView.getWindowVisibleDisplayFrame(outRect)
-        if(outRect != current){
+        if (outRect != current) {
             resizeContentPadding(window, v)
         }
     }
@@ -46,15 +47,19 @@ class DecorViewOnLayoutChangeListener(val window: Window) : View.OnLayoutChangeL
         var paddingRight = 0
         var paddingBottom = 0
         var paddingTop = 0
+
         var navigation =
-            window.decorView.findViewById<View>(android.R.id.navigationBarBackground) ?: return
+            window.context.getActivity()?.window?.decorView?.findViewById<View>(android.R.id.navigationBarBackground)
+                ?: return
         var navigationRect =
             navigation.getVisibleRectOfScreen()
+        Log.e("navigationRect", navigationRect.toShortString())
         if (navigationRect.height() == 0 || navigationRect.width() == 0) {
             return
         }
         val contentViewRect =
             contentView.getVisibleRectOfScreen()
+        Log.e("contentViewRect", contentViewRect.toShortString())
         var and = navigationRect.and(contentViewRect)
         Log.e(
             view.javaClass.simpleName, "and::" + and.toShortString()
@@ -110,6 +115,7 @@ class DecorViewOnLayoutChangeListener(val window: Window) : View.OnLayoutChangeL
             }
         }
     }
+
     fun isSoftInputVisible(window: Window): Boolean {
         return getDecorViewInvisibleHeight(window) > 0
     }
