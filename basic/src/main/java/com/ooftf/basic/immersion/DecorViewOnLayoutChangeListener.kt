@@ -1,7 +1,6 @@
 package com.ooftf.basic.immersion
 
 import android.graphics.Rect
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -53,17 +52,17 @@ class DecorViewOnLayoutChangeListener(val window: Window) : View.OnLayoutChangeL
                 ?: return
         var navigationRect =
             navigation.getVisibleRectOfScreen()
-        Log.e("navigationRect", navigationRect.toShortString())
+        //Log.e("navigationRect", navigationRect.toShortString())
         if (navigationRect.height() == 0 || navigationRect.width() == 0) {
             return
         }
         val contentViewRect =
             contentView.getVisibleRectOfScreen()
-        Log.e("contentViewRect", contentViewRect.toShortString())
+        //Log.e("contentViewRect", contentViewRect.toShortString())
         var and = navigationRect.and(contentViewRect)
-        Log.e(
+        /*Log.e(
             view.javaClass.simpleName, "and::" + and.toShortString()
-        )
+        )*/
         if (and.height() == 0 || and.width() == 0) {
             return
         }
