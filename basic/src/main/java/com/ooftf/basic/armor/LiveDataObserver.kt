@@ -11,7 +11,7 @@ import com.ooftf.basic.utils.ThreadUtil
  * @date 2020/11/4
  */
 class LiveDataObserver<T> : MutableLiveData<T>() {
-    fun <S> observeLiveData(source: LiveData<S>, adapter: (S) -> T) {
+    fun <S> observeLiveData(source: LiveData<S>, adapter: (S?) -> T?) {
         ThreadUtil.runOnUiThread {
             source.observeForever {
                 value = adapter.invoke(it)
@@ -19,7 +19,11 @@ class LiveDataObserver<T> : MutableLiveData<T>() {
         }
     }
 
-    fun <S> observeEachOther(source: MutableLiveData<S>, adapter: (S) -> T, adapter2: (T) -> S) {
+    fun <S> observeEachOther(
+        source: MutableLiveData<S>,
+        adapter: (S?) -> T?,
+        adapter2: (T?) -> S?
+    ) {
         ThreadUtil.runOnUiThread {
             source.observeForever {
                 val invoke = adapter.invoke(it)
@@ -43,13 +47,13 @@ class LiveDataObserver<T> : MutableLiveData<T>() {
     }
 }
 
-fun <S, T> LiveData<S>.map(adapter: (S) -> T): LiveDataObserver<T> {
+fun <S, T> LiveData<S>.map(adapter: (S?) -> T?): LiveDataObserver<T> {
     return LiveDataObserver<T>().also { it ->
         it.observeLiveData(this, adapter)
     }
 }
 
-fun <S, T> MutableLiveData<S>.map(adapter: (S) -> T, adapter2: (T) -> S): LiveDataObserver<T> {
+fun <S, T> MutableLiveData<S>.map(adapter: (S?) -> T?, adapter2: (T?) -> S?): LiveDataObserver<T> {
     return LiveDataObserver<T>().also { it ->
         it.observeEachOther(this, adapter, adapter2)
     }
