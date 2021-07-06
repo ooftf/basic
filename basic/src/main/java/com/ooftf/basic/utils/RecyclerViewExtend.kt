@@ -15,38 +15,36 @@ fun RecyclerView.scrollPositionToCenter(position: Int) {
         return
     }
     val layoutManager = (layoutManager as? LinearLayoutManager) ?: return
-    val first = layoutManager.findFirstCompletelyVisibleItemPosition()
-    val last = layoutManager.findLastCompletelyVisibleItemPosition()
-    if (position < first || position > last) {
-        if (scrollState == RecyclerView.SCROLL_STATE_IDLE) {
-            smoothScrollToPosition(position)
-            post {
-                scrollPositionToCenter(position)
+    val findViewByPosition = layoutManager.findViewByPosition(position)
+    if (findViewByPosition == null) {
+        this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (layoutManager.findViewByPosition(position) != null) {
+                    removeOnScrollListener(this)
+                    scrollPositionToCenter(position)
+                }
             }
-        } else {
-            post {
-                scrollPositionToCenter(position)
-            }
-        }
+        })
+        smoothScrollToPosition(position)
     } else {
-        val findViewByPosition = layoutManager.findViewByPosition(position) ?: return
         if (layoutManager.orientation == RecyclerView.VERTICAL) {
-            val dy = findViewByPosition.getVisibleRectOfScreen()
-                .centerY() - getVisibleRectOfScreen().centerY()
+            val dy =
+                (findViewByPosition.top + findViewByPosition.bottom) / 2 - (paddingTop + (height - paddingBottom)) / 2
             smoothScrollBy(
                 0,
                 dy
             )
         } else {
-            val dx = findViewByPosition.getVisibleRectOfScreen()
-                .centerX() - getVisibleRectOfScreen().centerX()
+            val dx =
+                (findViewByPosition.left + findViewByPosition.right) / 2 - (paddingLeft + (width - paddingRight)) / 2
             smoothScrollBy(
                 dx,
                 0
             )
         }
-
     }
+
 }
 
 fun RecyclerView.scrollPositionToFirst(position: Int) {
@@ -55,36 +53,29 @@ fun RecyclerView.scrollPositionToFirst(position: Int) {
         return
     }
     val layoutManager = (layoutManager as? LinearLayoutManager) ?: return
-    val first = layoutManager.findFirstCompletelyVisibleItemPosition()
-    val last = layoutManager.findLastCompletelyVisibleItemPosition()
-    if (position < first || position > last) {
-        if (scrollState == RecyclerView.SCROLL_STATE_IDLE) {
-            smoothScrollToPosition(position)
-            post {
-                scrollPositionToFirst(position)
+    val findViewByPosition = layoutManager.findViewByPosition(position)
+    if (findViewByPosition == null) {
+        this.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (layoutManager.findViewByPosition(position) != null) {
+                    removeOnScrollListener(this)
+                    scrollPositionToFirst(position)
+                }
             }
-        } else {
-            post {
-                scrollPositionToFirst(position)
-            }
-        }
+        })
+        smoothScrollToPosition(position)
     } else {
-        val findViewByPosition = layoutManager.findViewByPosition(position) ?: return
         if (layoutManager.orientation == RecyclerView.VERTICAL) {
-            val dy =
-                findViewByPosition.getVisibleRectOfScreen().top - getVisibleRectOfScreen().top
             smoothScrollBy(
                 0,
-                dy
+                findViewByPosition.top - paddingTop
             )
         } else {
-            val dx =
-                findViewByPosition.getVisibleRectOfScreen().left - getVisibleRectOfScreen().left
             smoothScrollBy(
-                dx,
+                findViewByPosition.left - paddingLeft,
                 0
             )
         }
-
     }
 }
